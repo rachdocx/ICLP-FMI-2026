@@ -1,5 +1,5 @@
 /*
-1.⁠ ⁠Implementati un counter in Java, folosind sincronizare atat cu synchronized, 
+    1.⁠ ⁠Implementati un counter in Java, folosind sincronizare atat cu synchronized, 
     cat si cu reentrantLock-uri (ca in problema de mai sus)
 */
 
@@ -8,7 +8,7 @@ import java.util.concurrent.locks.ReentrantLock;
 class MyCounterSync {
   private int COUNTER = 0;
 
-  public synchronized void inc(){
+  public synchronized void inc(){ // <- fara synchronized counter nu e 300000 la final
     this.COUNTER++;
   }
 
@@ -22,7 +22,7 @@ class MyCounterLock{
   private int COUNTER = 0;
 
   public void inc(){
-    lock.lock();
+    lock.lock(); // <- fara lock/unlock counter nu e 300000 la final
     try{
       this.COUNTER++;
     }

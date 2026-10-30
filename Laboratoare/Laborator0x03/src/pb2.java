@@ -140,7 +140,7 @@ private void writeFile(File dir) {
     }
   }
 }
-public class Main {
+public class pb2 {
   public static void main(String[] args){
     Semaphore wrt = new Semaphore(1);
     Semaphore mutex = new Semaphore(1);

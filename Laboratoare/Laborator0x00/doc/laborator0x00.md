@@ -1,29 +1,41 @@
-// studiem IPC (inter-process communication) 
-// API-ul IPC System V 
+# Laborator 0x00
 
-// avem o ierarhie tata-fiu 
-// vrem ca cele doua procese sa comunice prin 
-// intermediul unei zone partajate de memorie 
-// pe un segment de 1B 
-// tatal scrie in acel segment caracterele de la 'a' la 'z' 
-// fiul trebuie sa le consume pe masura ce tatal le scrie 
-// si, eventual, sa le afiseze la STDOUT 
+## Descriere
 
-// f o r k 
+studiem IPC (inter-process communication)
+API-ul IPC System V
 
-// reca SO: pid_t fork()
-// returneaza 0 daca suntem in procesul copil 
-// returneaza >0 daca suntem in procesul tata (returneaza pid-ul copilului)
-// returneaza -1 si seteaza errno daca apare o eroare 
+avem o ierarhie tata-fiu
+vrem ca cele doua procese sa comunice prin
+intermediul unei zone partajate de memorie
+pe un segment de 1B
+tatal scrie in acel segment caracterele de la 'a' la 'z'
+fiul trebuie sa le consume pe masura ce tatal le scrie
+si, eventual, sa le afiseze la STDOUT
 
-// zona partajata de memorie este shared memory -> shm 
-// semafoarele sunt -> sem 
+## Recap
 
-// Pe acelasi model de arbitraj 
-// scrieti un program tata-fiu care incrementeaza/decrementeaza un contor 
-// tatal il incrementeaza de 1000000 de ori 
-// fiul il decrementeaza de 1000000 de ori 
-// la final, afisti valoarea 
+f o r k
+
+reca SO: pid_t fork()
+returneaza 0 daca suntem in procesul copil
+returneaza >0 daca suntem in procesul tata (returneaza pid-ul copilului)
+returneaza -1 si seteaza errno daca apare o eroare
+
+zona partajata de memorie este shared memory -> shm
+semafoarele sunt -> sem
+
+## Exercitiu
+
+Pe acelasi model de arbitraj
+scrieti un program tata-fiu care incrementeaza/decrementeaza un contor
+tatal il incrementeaza de 1000000 de ori
+fiul il decrementeaza de 1000000 de ori
+la final, afisti valoarea
+
+## Cod
+
+```c
 
 #include <stdio.h>
 #include <unistd.h> 
@@ -110,3 +122,10 @@ int main(int argc, char* argv[])
         }
     }
 }
+```
+
+### Note din cod
+
+- `wait(NULL)` — un tata responsabil isi asteapta toti copiii ca sa-i omoare inainte de a se sinucide (C. Rusu aprox. 2020)
+- sistemul de operare are o tabela IPC care este activa pe durata de viata a SO-ului — daca nu stergem, obiectele raman orfane acolo
+- `fflush(NULL)` — echivalent asm: `push $0` / `call fflush` / `add $4, %esp`

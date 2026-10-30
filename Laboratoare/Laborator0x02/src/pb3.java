@@ -1,3 +1,4 @@
+package src;
 /*
     Scrieti un model de producer-consumer prin care producatorii 
     parcurg o ierarhie de foldere, citesc continutul fisierelor .txt si 

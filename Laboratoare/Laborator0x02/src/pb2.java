@@ -1,3 +1,4 @@
+package src;
 /*
     1.⁠ ⁠Implementati un counter in Java, folosind sincronizare atat cu synchronized, 
     cat si cu reentrantLock-uri (ca in problema de mai sus)

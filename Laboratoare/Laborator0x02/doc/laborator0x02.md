@@ -1,3 +1,8 @@
+# Laborator 0x02
+
+## pb1.java
+
+```java
 import java.util.*;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -133,3 +138,5 @@ class Main {
         }
     }
 }
+```
+

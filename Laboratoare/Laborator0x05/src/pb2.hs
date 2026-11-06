@@ -1,0 +1,3 @@
+-- definiti tipul de date algebric 
+-- data myTree a = Nil | leaf a | Tree(MyTree a)(MyTree a) 
+-- deriving (Eq, Show)

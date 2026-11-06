@@ -1,0 +1,1 @@
+-- aplicati functiile de la ex 1 pe tipul de la ex 2

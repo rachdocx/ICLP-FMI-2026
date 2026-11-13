@@ -22,6 +22,9 @@ Idee pt examen: se asaza la masa circular si trebuie rezolvata problema filosofi
  
 -}
  
+
+ -- modificati problema sa fie cu mese
+ 
 import Control.Concurrent
 import Control.Concurrent.MVar  
 import Control.Monad 
@@ -66,12 +69,33 @@ takeprint stdo = do
     msg <- takeMVar stdo 
     putStrLn msg 
  
--- main :: IO () 
--- main = do 
---     stdo <- newEmptyMVar
---     restaurant <- newMVar ([L, L, L], [])
---     let clients = 5 
---     -- ... 
---     -- ... 
+client restaurant stdo indexClient = do 
+    (currentRestaurant, cq) <- takeMVar restaurant 
+    if full currentRestaurant then do 
+        putMVar restaurant (currentRestaurant, cq ++ [indexClient])
+        putMVar stdo $ "Clientul " ++ show indexClient ++ " asteapta la coada"
+    else do 
+        let indexLoc = fromJust $ elemIndex L currentRestaurant
+        let newRestaurant = ocupaloc indexLoc currentRestaurant 
+        putMVar restaurant (newRestaurant, cq)
+        clientin restaurant stdo indexClient indexLoc 
  
---     getLine 
+clientin restaurant stdo indexClient indexLoc = do 
+    putMVar stdo $ "Clientul " ++ show indexClient ++ " a ocupat locul " ++ show indexLoc 
+    threadDelay 5000000 
+    putMVar stdo $ "Clientul " ++ show indexClient ++ " paraseste restaurantul"
+    (currentRestaurant, cq) <- takeMVar restaurant 
+    if null cq then 
+        putMVar restaurant (elibloc indexLoc currentRestaurant, cq) 
+    else do 
+        putMVar restaurant (currentRestaurant, tail cq)
+        clientin restaurant stdo (head cq) indexLoc 
+ 
+main = do 
+    stdo <- newEmptyMVar
+    restaurant <- newMVar ([L, L, L], [])
+    let clients = 5 
+    
+    mapM_ (forkIO . client restaurant stdo) [1..clients]
+    
+    forkIO $ forever $ takeprint stdo 
